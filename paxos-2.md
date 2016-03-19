@@ -6,8 +6,10 @@
 1.编号处理
 根据P2c ，proposer在提案前会先咨询acceptor查看其批准的最大的编号和value，再决定提交哪个value。之前我们一直强调更高编号的proposal，而没有说明低编号的proposal该怎么处理。 
 
+```
 |--------低编号(L<N)--------|--------当前编号(N)--------|--------高编号(H>N)--------|  
 
+```
 P2c 的正确性是由当前编号N而产生了一些更高编号H来保证的，更低编号L在之前某个时刻，可能也是符合P2c 的，但因为网络通信的不可靠，导致L被延迟到与H同时提交，L与H有可能有不同的value，这显然违背了P2c ，解决办法是acceptor不接受任何编号已过期的proposal，更精确的描述为：
 
 ####P1a ： An acceptor can accept a proposal numbered n iff it has not responded to a prepare request having a number greater than n.
